@@ -73,4 +73,19 @@ return 0;
 }
 }
 
+public function getLaporanPenjualan()
+    {
+        $penjualan = new Mpenjualan();
+        $penjualan->select('tbl_penjualan.id_penjualan, tbl_penjualan.no_transaksi, tbl_penjualan.tgl_penjualan, tbl_penjualan.total');
+        $penjualan->orderBy('tbl_penjualan.tgl_penjualan', 'DESC');
+
+        return $penjualan->findAll();
+    }
+    public function getPenjualan(){
+        $penjualan = NEW Mpenjualan;
+        $queryPenjualan=$penjualan->query("CALL `lihat_laporan2`();")->getResult();
+        return $queryPenjualan;
+    }
+    
+
 }

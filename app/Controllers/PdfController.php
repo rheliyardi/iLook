@@ -40,4 +40,37 @@ public function generate()
         // output the generate pdf
         $dompdf->stream($filename);
     }
+
+
+    public function laporanpenjualan()
+    {
+        $data =[
+            'listPenjualan'=>$this->penjualan->getPenjualan()
+        ];
+        return view('Laporan/data-laporan-penjualan',$data);
+    }
+
+public function generatepenjualan()
+    {
+        $filename = date('y-m-d-h-i-s'). '-qadr-labs-report';
+
+        // instantiate and use the dompdf class
+        $dompdf = new Dompdf();
+
+        // load HTML content
+        $data =[
+            'listPenjualan'=>$this->penjualan->getPenjualan()
+        ];
+        $html = view('Laporan/pdf-penjualan', $data);
+        $dompdf->loadHtml($html);
+
+        // (optimal) setup the paper size and orientation
+        $dompdf->setPaper('A4', 'landscape');
+
+        // render html as pdf
+        $dompdf->render();
+
+        // output the generate pdf
+        $dompdf->stream($filename);
+    }
 }

@@ -28,6 +28,38 @@ class Pengguna extends BaseController
     }
     public function simpanPengguna()
     {
+       // helper(['form']);
+       $validation = \Config\Services::validation();
+
+       $rules = [
+           'namaPengguna' => 'required|is_unique[tbl_pengguna.nama_pengguna]', 
+           'password' => 'required',
+            'username' => 'required|is_unique[tbl_pengguna.username]',
+            'level' => 'required',
+       ];
+       $messages = [
+        'namaPengguna' => [
+            'required' => 'Nama pengguna tidak boleh kosong!',
+            'is_unique' => 'Nama pengguna sudah ada!'
+        ],
+        'password' => [
+            'required' => 'password tidak boleh kosong!',
+        ],
+        'username' => [
+            'required' => 'username tidak boleh kosong!',
+            'is_unique' => 'Nama pengguna sudah ada!'
+        ], 
+        'level' => [
+            'required' => 'level tidak boleh kosong!',
+        ],
+       ];
+      // set validasi
+      $validation->setRules($rules, $messages);
+
+      // cek validasi gagal
+      if (!$validation->withRequest($this->request)->run()) {
+      return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+      }
         $data=[
             //'nama_field'=>......('nama input')
 			'nama_pengguna'=>$this->request->getPost('namaPengguna'),

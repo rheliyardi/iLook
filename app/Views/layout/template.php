@@ -46,11 +46,10 @@
     <ul class="navbar-nav">
       <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
         <h1 class="welcome-text">Selamat Pagi, <span class="text-black fw-bold">
+         
         <?=session()->get('namaPengguna');?>  
-        
-        
-        
-        </span></h1>
+         </span></h1>
+         
         <?php
         if (session()->getFlashdata('pesan')) {
             echo session()->getFlashdata('pesan');
@@ -351,9 +350,16 @@
     <li class="nav-item">
       <a class="nav-link" data-bs-toggle="collapse" href="<?= site_url('/laporan'); ?>" aria-expanded="false" aria-controls="auth">
         <i class="menu-icon mdi mdi-account-circle-outline"></i>
-        <span class="menu-title">Laporan</span>
+        <span class="menu-title">Laporan Stok Produk</span>
         <i class="menu-arrow"></i>
       </a>
+      <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="collapse" href="<?= site_url('/laporan-penjualan'); ?>" aria-expanded="false" aria-controls="auth">
+        <i class="menu-icon mdi mdi-account-circle-outline"></i>
+        <span class="menu-title">Laporan Penjualan</span>
+        <i class="menu-arrow"></i>
+      </a>
+      
       <div class="collapse" id="auth">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="../pages/samples/login.html"> Login </a></li>

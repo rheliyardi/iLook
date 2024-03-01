@@ -17,6 +17,14 @@ if (session()->getFlashdata('pesan')) {
         <a href="<?= site_url('tambah-kategori') ?>" class="btn btn-sm btn-primary">Tambah Data Kategori</a>
 </div>
 </div>
+
+<div class="row">
+    <div class="col-lg-5 mx-3 mt-4"><?php if (session('success')) : ?>
+            <?= session('success') ?>
+            
+        <?php endif; ?></div>
+</div>
+
 <!-- End Page Title -->
 <div class="row">
     <div class="col-lg-12">

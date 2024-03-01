@@ -31,7 +31,27 @@ class Kategori extends BaseController
 
     public function simpanKategori()
     {
-        
+       // helper(['form']);
+        $validation = \Config\Services::validation();
+
+        $rules = [
+            'nama_kategori' => 'required|is_unique[tbl_kategori.nama_kategori]', 
+        ];
+        $messages = [
+            'nama_kategori' => [
+                'required' => 'Nama kategori tidak boleh kosong!',
+                'is_unique' => 'Nama kategori sudah ada!'
+            ],  
+        ];
+       // set validasi
+       $validation->setRules($rules, $messages);
+
+       // cek validasi gagal
+       if (!$validation->withRequest($this->request)->run()) {
+       return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+       }
+
+
         $data=[
             //'nama_field'=>......('nama input')
 			'nama_kategori'=>$this->request->getPost('nama_kategori'),

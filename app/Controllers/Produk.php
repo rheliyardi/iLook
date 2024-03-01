@@ -40,6 +40,44 @@ class Produk extends BaseController
 
     public function simpanProduk()
     {
+        helper(['form']);
+        $validation = \Config\Services::validation();
+
+        $rules = [
+            'nama_produk' => 'required|is_unique[tbl_produk.nama_produk]',
+            'kategori' => 'required',
+            'stok' => 'required|greater_than[0]',
+            'satuan' => 'required',
+            'harga_jual' => 'required|checkHargaValid[harga_jual]', 
+        ];
+        $messages = [
+            'nama_produk' => [
+                'required' => 'Nama produk tidak boleh kosong!',
+                'is_unique' => 'Nama produk sudah ada!'
+            ],
+            'kategori' => [
+                'required' => 'kategori tidak boleh kosong!',
+            ],
+            'stok' => [
+                'required' => 'Stok tidak boleh kosong!',
+                'greater_than' => 'Stok harus lebih besar dari 0!'
+            ], 
+            'satuan' => [
+                'required' => 'Satuan tidak boleh kosong!',
+            ],
+            'harga_jual' => [
+                'required' => 'Harga jual tidak boleh kosong!',
+                'checkHargaValid' => 'Harga jual tidak boleh lebih kecil dari harga beli!'
+            ],  
+        ];
+       // set validasi
+       $validation->setRules($rules, $messages);
+
+       // cek validasi gagal
+       if (!$validation->withRequest($this->request)->run()) {
+       return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+       }
+
         $data=[
             //'nama_field'=>......('nama input')
 			'nama_produk'=>$this->request->getPost('nama_produk'),
